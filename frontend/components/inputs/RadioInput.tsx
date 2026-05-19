@@ -10,9 +10,10 @@ interface RadioInputProps {
         {options.map((option) => (
           <label
             key={option}
-            className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+            className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 hover:text-black"
           >
             <input
+              aria-labelledby="screen-prompt"
               type="radio"
               data-testid={`radio-input-${option.toLowerCase()}`}
               checked={value === option}

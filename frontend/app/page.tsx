@@ -13,6 +13,9 @@ export default function Home() {
     loading,
     currentValue,
     progress,
+    error,
+    answers,
+    schema,
     setCurrentValue,
     handleNext,
     computeBMI,
@@ -31,11 +34,11 @@ export default function Home() {
     return (
       <div className="min-h-screen flex items-center justify-center p-6">
         <div className="w-full max-w-lg">
-          <ResultScreen result={result} />
+          <ResultScreen result={result} answers={answers} schema={schema} />
           <button
           data-testid="reset-button"
           onClick={resetSession}
-          className="w-full border border-gray-300 text-gray-600 py-3 rounded-lg text-lg font-medium hover:bg-gray-50 transition-colors"
+          className="w-full border mt-4 border-gray-300 text-gray-600 py-3 rounded-lg text-lg font-medium hover:bg-gray-50 transition-colors"
         >
           Start Over
         </button>

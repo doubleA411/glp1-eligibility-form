@@ -9,11 +9,13 @@ export const useForm = () => {
     currentScreen,
     answers,
     result,
+    schema,
     reset,
     setSessionId,
     setCurrentScreen,
     setAnswer,
     setResult,
+    setSchema,
   } = useFormStore();
 
   const [currentValue, setCurrentValue] = useState<any>(null);
@@ -22,6 +24,9 @@ export const useForm = () => {
 
   useEffect(() => {
     const init = async () => {
+      const schemaResponse = await fetch(`${API_URL}/form/schema`);
+      const schemaData = await schemaResponse.json();
+      setSchema(schemaData);
       const savedSessionId = localStorage.getItem("sessionId");
 
       if (savedSessionId) {
@@ -152,6 +157,9 @@ export const useForm = () => {
     currentValue,
     setCurrentValue,
     result,
+    answers,
+    error,
+    schema,
     handleNext,
     computeBMI,
     resetSession

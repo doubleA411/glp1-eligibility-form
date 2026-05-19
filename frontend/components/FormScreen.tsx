@@ -1,45 +1,84 @@
-'use client'
+"use client";
 
-import NumberInput from './inputs/NumberInput'
-import RadioInput from './inputs/RadioInput'
-import CheckboxInput from './inputs/CheckboxInput'
-import ComputedScreen from './inputs/ComputedScreen'
+import NumberInput from "./inputs/NumberInput";
+import RadioInput from "./inputs/RadioInput";
+import CheckboxInput from "./inputs/CheckboxInput";
+import ComputedScreen from "./inputs/ComputedScreen";
+
+import { useState } from "react";
 
 interface Screen {
-  screen: number
-  prompt: string
-  type: string
-  options?: string[]
+  screen: number;
+  prompt: string;
+  type: string;
+  options?: string[];
 }
 
 interface FormScreenProps {
-  screen: Screen
-  value: any
-  onChange: (value: any) => void
-  onNext: () => void
-  bmi?: number
-  progress: number
+  screen: Screen;
+  value: any;
+  onChange: (value: any) => void;
+  onNext: () => void;
+  bmi?: number;
+  progress: number;
 }
 
-export default function FormScreen({ screen, value, onChange, onNext, bmi, progress }: FormScreenProps) {
+export default function FormScreen({
+  screen,
+  value,
+  onChange,
+  onNext,
+  bmi,
+  progress,
+}: FormScreenProps) {
+  const [error, setError] = useState<string | null>(null);
+
   const renderInput = () => {
     switch (screen.type) {
-      case 'number':
-        return <NumberInput value={value ?? ''} onChange={onChange} />
-      case 'radio':
-        return <RadioInput options={screen.options ?? []} value={value} onChange={onChange} />
-      case 'checkbox':
-        return <CheckboxInput options={screen.options ?? []} value={value ?? []} onChange={onChange} />
-      case 'computed':
-        return <ComputedScreen screenNumber={screen.screen} bmi={bmi} />
+      case "number":
+        return <NumberInput value={value ?? ""} onChange={onChange} />;
+      case "radio":
+        return (
+          <RadioInput
+            options={screen.options ?? []}
+            value={value}
+            onChange={onChange}
+          />
+        );
+      case "checkbox":
+        return (
+          <CheckboxInput
+            options={screen.options ?? []}
+            value={value ?? []}
+            onChange={onChange}
+          />
+        );
+      case "computed":
+        return <ComputedScreen screenNumber={screen.screen} bmi={bmi} />;
       default:
-        return null
+        return null;
     }
-  }
+  };
+
+  const handleNext = () => {
+    if (screen.type !== "computed" && !value && value !== 0) {
+      setError("Please answer this question before continuing.");
+      return;
+    }
+    if (
+      screen.type === "checkbox" &&
+      Array.isArray(value) &&
+      value.length === 0
+    ) {
+      setError("Please select at least one option.");
+      return;
+    }
+    setError(null);
+    onNext();
+  };
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Progress bar */}
       <div className="w-full bg-gray-200 rounded-full h-2">
         <div
           className="bg-blue-500 h-2 rounded-full transition-all"
@@ -47,30 +86,38 @@ export default function FormScreen({ screen, value, onChange, onNext, bmi, progr
         />
       </div>
 
-      {/* Screen number */}
       <p className="text-sm text-gray-400">Step {screen.screen} of 15</p>
 
-      {/* Prompt */}
       {screen.prompt && (
         <h2
+          id="screen-prompt"
           data-testid="screen-prompt"
-          className="text-2xl font-semibold text-gray-800"
+          className="text-2xl font-semibold text-slate-100"
         >
           {screen.prompt}
         </h2>
       )}
 
-      {/* Input */}
       {renderInput()}
 
-      {/* Next button */}
+      {error && (
+        <p
+          role="alert"
+          aria-live="polite"
+          className="text-red-600 text-sm"
+          data-testid="error-message"
+        >
+          {error}
+        </p>
+      )}
+
       <button
         data-testid="next-button"
-        onClick={onNext}
-        className="w-full bg-blue-500 text-white py-3 rounded-lg text-lg font-medium hover:bg-blue-600 transition-colors"
+        onClick={handleNext}
+        className="w-full bg-white text-black py-3 rounded-lg text-lg font-medium hover:cursor-pointer hover:bg-slate-300 transition-colors"
       >
         Next
       </button>
     </div>
-  )
+  );
 }

@@ -6,6 +6,7 @@ interface NumberInputProps {
   export default function NumberInput({ value, onChange }: NumberInputProps) {
     return (
       <input
+        aria-labelledby="screen-prompt"
         data-testid="number-input"
         type="number"
         value={value}
