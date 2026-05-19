@@ -23,7 +23,7 @@ interface CheckboxInputProps {
             <input
               aria-labelledby="screen-prompt"
               type="checkbox"
-              data-testid={`checkbox-input-${option.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
+              data-testid={`checkbox-input-${option.toLowerCase().split('(')[0].trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
               checked={value.includes(option)}
               onChange={() => toggle(option)}
               className="w-4 h-4"
@@ -31,20 +31,6 @@ interface CheckboxInputProps {
             {option}
           </label>
         ))}
-        <label
-            key={'na'}
-            className="flex items-center gap-3 p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 hover:text-black"
-          >
-            <input
-              aria-labelledby="screen-prompt"
-              type="checkbox"
-              data-testid={'checkbox-input-na}'}
-              checked={value.includes('na')}
-              onChange={() => toggle('na')}
-              className="w-4 h-4"
-            />
-            NA
-          </label>
       </div>
     )
   }

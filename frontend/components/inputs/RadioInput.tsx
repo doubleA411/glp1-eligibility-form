@@ -15,7 +15,7 @@ interface RadioInputProps {
             <input
               aria-labelledby="screen-prompt"
               type="radio"
-              data-testid={`radio-input-${option.toLowerCase()}`}
+              data-testid={`radio-input-${option.toLowerCase().split('(')[0].trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}`}
               checked={value === option}
               onChange={() => onChange(option)}
               className="w-4 h-4"

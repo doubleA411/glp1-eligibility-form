@@ -24,7 +24,7 @@ export interface Answers {
     if (bmi < 25) return 'ineligible'
     if (answers.pregnant) return 'ineligible'
     if (answers.hasDiabetes && answers.hba1c && answers.hba1c > 9.0) return 'ineligible'
-    if (answers.medications.includes('GLP-1 receptor agonist')) return 'ineligible'
+    if (answers.medications.includes('GLP-1 receptor agonist')) return 'clinical_review'
   
     // automatic clinical review
     if (answers.age > 75) return 'clinical_review'

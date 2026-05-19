@@ -93,7 +93,7 @@ export class SessionService {
         return 9;
       case 9: return 10;
       case 10:
-        if (Array.isArray(value) && value.includes('GLP-1 receptor agonist')) return 'ineligible';
+        if (Array.isArray(value) && value.includes('GLP-1 receptor agonist')) return 'clinical_review';
         return 11;
       case 11: return 12;
       case 12: return 13;

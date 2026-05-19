@@ -60,25 +60,27 @@ export default function FormScreen({
     }
   };
 
+  const optionalCheckboxScreens = [6, 9, 10, 14]
+
   const handleNext = () => {
-    if (screen.type !== "computed" && !value && value !== 0) {
-      setError("Please answer this question before continuing.");
-      return;
+    if (screen.type === 'checkbox' && !optionalCheckboxScreens.includes(screen.screen)) {
+      if (!value || (Array.isArray(value) && value.length === 0)) {
+        setError('Please select at least one option.')
+        return
+      }
     }
-    if (
-      screen.type === "checkbox" &&
-      Array.isArray(value) &&
-      value.length === 0
-    ) {
-      setError("Please select at least one option.");
-      return;
+    
+    if (screen.type !== 'computed' && screen.type !== 'checkbox' && !value && value !== 0) {
+      setError('Please answer this question before continuing.')
+      return
     }
-    setError(null);
-    onNext();
-  };
+    
+    setError(null)
+    onNext()
+  }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div data-testid={`screen-${screen.screen}`} className="flex flex-col gap-6">
       <div className="w-full bg-gray-200 rounded-full h-2">
         <div
           className="bg-blue-500 h-2 rounded-full transition-all"
