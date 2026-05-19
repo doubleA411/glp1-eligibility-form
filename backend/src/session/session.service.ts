@@ -107,13 +107,13 @@ export class SessionService {
     const getAnswer = (s: number) => allAnswers.find(a => a.screen === s)?.value;
 
     return {
-      age: getAnswer(1),
-      weight: getAnswer(2),
-      height: getAnswer(3),
+      age: Number(getAnswer(1)),
+      weight: Number(getAnswer(2)),
+      height: Number(getAnswer(3)),
       pregnant: getAnswer(5),
       comorbidities: getAnswer(6) ?? [],
       hasDiabetes: getAnswer(7),
-      hba1c: getAnswer(8),
+      hba1c: getAnswer(8) ? Number(getAnswer(8)) : undefined,
       bloodPressure: getAnswer(9) ?? [],
       medications: getAnswer(10) ?? [],
       smoking: getAnswer(11),
