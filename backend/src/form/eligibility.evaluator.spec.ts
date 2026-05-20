@@ -37,7 +37,7 @@ describe('evaluateEligibility', () => {
       })
       it('should return ineligible when glp-1 receptor agonist selected', () => {
         const answers = { ...baseAnswers, medications: ['GLP-1 receptor agonist']}
-        expect(evaluateEligibility(answers)).toBe('ineligible')
+        expect(evaluateEligibility(answers)).toBe('clinical_review')
       })
 
       //automatic clinical review

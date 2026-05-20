@@ -38,6 +38,10 @@ jobs:
         working-directory: backend
         run: npm install
 
+      - name: Build backend
+        working-directory: backend
+        run: npm run build
+
       - name: Run Prisma migrations
         working-directory: backend
         run: npx prisma migrate deploy
@@ -59,6 +63,28 @@ jobs:
       - name: Install frontend dependencies
         working-directory: frontend
         run: npm install
+
+      - name: Start backend
+        working-directory: backend
+        run: npm run start:prod &
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/glp1_eligibility
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Start frontend
+        working-directory: frontend
+        run: npm run start -- -p 3001 &
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3000/api
+
+      - name: Wait for servers to be ready
+        working-directory: frontend
+        run: |
+          ./node_modules/.bin/wait-on http://localhost:3000/api/form/schema
+          ./node_modules/.bin/wait-on http://localhost:3001
 
       - name: Install Playwright browsers
         working-directory: frontend
