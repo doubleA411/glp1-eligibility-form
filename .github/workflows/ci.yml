@@ -38,6 +38,10 @@ jobs:
         working-directory: backend
         run: npm install
 
+      - name: Build backend
+        working-directory: backend
+        run: npm run build
+
       - name: Run Prisma migrations
         working-directory: backend
         run: npx prisma migrate deploy
@@ -59,10 +63,6 @@ jobs:
       - name: Install frontend dependencies
         working-directory: frontend
         run: npm install
-      
-      - name: Build backend
-        working-directory: backend
-        run: npm run build
 
       - name: Start backend
         working-directory: backend
