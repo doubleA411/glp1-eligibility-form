@@ -77,18 +77,41 @@ npx playwright test --project=chromium
 
 ## Architecture
 
-```glp1-eligibility-form/
-├── backend/          # NestJS API
+```
+glp1-eligibility-form/
+├── backend/
 │   ├── src/
-│   │   ├── form/     # Form schema + eligibility evaluator
-│   │   └── session/  # Session management endpoints
-│   └── prisma/       # Database schema + migrations
-├── frontend/         # Next.js App Router
-│   ├── app/          # Pages
-│   ├── components/   # UI components (container/presentation pattern)
-│   ├── hooks/        # useForm — business logic
-│   ├── store/        # Zustand state
-│   └── e2e/          # Playwright specs
+│   │   ├── form/
+│   │   │   ├── form.schema.ts
+│   │   │   ├── form.controller.ts
+│   │   │   ├── eligibility.evaluator.ts
+│   │   │   └── eligibility.evaluator.spec.ts
+│   │   ├── session/
+│   │   │   ├── session.controller.ts
+│   │   │   ├── session.service.ts
+│   │   │   └── session.service.spec.ts
+│   │   └── prisma.service.ts
+│   └── prisma/
+│       └── schema.prisma
+├── frontend/
+│   ├── app/
+│   │   └── page.tsx
+│   ├── components/
+│   │   ├── inputs/
+│   │   │   ├── NumberInput.tsx
+│   │   │   ├── RadioInput.tsx
+│   │   │   └── CheckboxInput.tsx
+│   │   ├── FormScreen.tsx
+│   │   └── ResultScreen.tsx
+│   ├── hooks/
+│   │   └── useForm.ts
+│   ├── store/
+│   │   └── formStore.ts
+│   └── e2e/
+│       ├── happy-path.spec.ts
+│       ├── resume.spec.ts
+│       ├── terminal-state.spec.ts
+│       └── edge-case.spec.ts
 └── docker-compose.yml
 ```
 
