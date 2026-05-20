@@ -77,7 +77,7 @@ npx playwright test --project=chromium
 
 ## Architecture
 
-glp1-eligibility-form/
+```glp1-eligibility-form/
 ├── backend/          # NestJS API
 │   ├── src/
 │   │   ├── form/     # Form schema + eligibility evaluator
@@ -90,6 +90,7 @@ glp1-eligibility-form/
 │   ├── store/        # Zustand state
 │   └── e2e/          # Playwright specs
 └── docker-compose.yml
+```
 
 
 ## API
