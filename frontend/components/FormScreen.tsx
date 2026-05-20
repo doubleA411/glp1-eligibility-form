@@ -106,7 +106,7 @@ export default function FormScreen({
         <p
           role="alert"
           aria-live="polite"
-          className="text-red-600 text-sm"
+          className="text-red-600 text-xs"
           data-testid="error-message"
         >
           {error}
