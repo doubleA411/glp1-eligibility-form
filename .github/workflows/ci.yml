@@ -59,6 +59,31 @@ jobs:
       - name: Install frontend dependencies
         working-directory: frontend
         run: npm install
+      
+      - name: Build backend
+        working-directory: backend
+        run: npm run build
+
+      - name: Start backend
+        working-directory: backend
+        run: npm run start:prod &
+        env:
+          DATABASE_URL: postgresql://postgres:postgres@localhost:5432/glp1_eligibility
+
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      - name: Start frontend
+        working-directory: frontend
+        run: npm run start &
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:3000/api
+
+      - name: Wait for servers to be ready
+        run: |
+          npx wait-on http://localhost:3000/api/form/schema
+          npx wait-on http://localhost:3001
 
       - name: Install Playwright browsers
         working-directory: frontend
