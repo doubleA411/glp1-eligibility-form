@@ -128,6 +128,16 @@ glp1-eligibility-form/
 | GET | `/api/session/:id` | Get session with all saved answers |
 | GET | `/api/form/schema` | Get full 15-screen form schema |
 
+
+## Architecture Decision Records
+
+Key architectural decisions are documented in the `docs/` folder:
+
+- [ADR-001 — Zustand over Context API](docs/adr-001-zustand-over-context.md)
+- [ADR-002 — Container/Presentation Pattern](docs/adr-002-container-presentation-pattern.md)
+- [ADR-003 — Backend as Single Source of Truth](docs/adr-003-backend-single-source-of-truth.md)
+
+
 ## CI
 
 GitHub Actions runs on every PR to `master`:
