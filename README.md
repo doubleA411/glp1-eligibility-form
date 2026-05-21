@@ -1,5 +1,8 @@
 # GLP-1 Eligibility Form
 
+![CI](https://github.com/doubleA411/glp1-eligibility-form/actions/workflows/ci.yml/badge.svg)
+
+
 A 15-screen conditional eligibility screening form for GLP-1 weight-loss medication.
 
 ## Stack
