@@ -36,10 +36,11 @@ export default function FormScreen({
   const renderInput = () => {
     switch (screen.type) {
       case "number":
-        return <NumberInput value={value ?? ""} onChange={onChange} />;
+        return <NumberInput key={screen.screen} value={value ?? ""} onChange={onChange} />;
       case "radio":
         return (
           <RadioInput
+            key={screen.screen}
             options={screen.options ?? []}
             value={value}
             onChange={onChange}
@@ -48,6 +49,7 @@ export default function FormScreen({
       case "checkbox":
         return (
           <CheckboxInput
+            key={screen.screen}
             options={screen.options ?? []}
             value={value ?? []}
             onChange={onChange}
@@ -61,6 +63,16 @@ export default function FormScreen({
   };
 
   const optionalCheckboxScreens = [6, 9, 10, 14]
+
+  const isRequiredCheckbox = screen.type === 'checkbox' && !optionalCheckboxScreens.includes(screen.screen)
+  const isDisabled =
+    (screen.type === 'number' && (!value && value !== 0)) ||
+    (screen.type === 'radio' && !value) ||
+    (isRequiredCheckbox && (!value || (Array.isArray(value) && value.length === 0)))
+
+  const disabledTooltip = isRequiredCheckbox
+    ? 'Please select at least one option to continue.'
+    : 'Please answer this question to continue.'
 
   const handleNext = () => {
     if (screen.type === 'checkbox' && !optionalCheckboxScreens.includes(screen.screen)) {
@@ -94,13 +106,19 @@ export default function FormScreen({
         <h2
           id="screen-prompt"
           data-testid="screen-prompt"
-          className="text-2xl font-semibold text-slate-100"
+          className="text-2xl font-semibold text-slate-800"
         >
           {screen.prompt}
         </h2>
       )}
 
       {renderInput()}
+
+      {screen.type === 'checkbox' && optionalCheckboxScreens.includes(screen.screen) && (
+        <p className="text-sm text-gray-500 italic">
+          If none of these apply to you, click Next to continue.
+        </p>
+      )}
 
       {error && (
         <p
@@ -113,13 +131,16 @@ export default function FormScreen({
         </p>
       )}
 
-      <button
-        data-testid="next-button"
-        onClick={handleNext}
-        className="w-full bg-white text-black py-3 rounded-lg text-lg font-medium hover:cursor-pointer hover:bg-slate-300 transition-colors"
-      >
-        Next
-      </button>
+      <div title={isDisabled ? disabledTooltip : undefined}>
+        <button
+          data-testid="next-button"
+          onClick={handleNext}
+          disabled={isDisabled}
+          className="w-full bg-blue-600 text-white py-3 rounded-lg text-lg font-medium transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:enabled:bg-blue-700"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

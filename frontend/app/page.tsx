@@ -38,7 +38,7 @@ export default function Home() {
           <button
           data-testid="reset-button"
           onClick={resetSession}
-          className="w-full border mt-4 border-gray-300 text-gray-600 py-3 rounded-lg text-lg font-medium hover:bg-gray-50 transition-colors"
+          className="w-full border mt-4 border-gray-300 text-gray-600 py-3 rounded-lg text-lg font-medium cursor-pointer hover:bg-gray-50 transition-colors"
         >
           Start Over
         </button>
