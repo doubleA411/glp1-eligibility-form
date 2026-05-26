@@ -143,4 +143,4 @@ Key architectural decisions are documented in the `docs/` folder:
 GitHub Actions runs on every PR to `master`:
 - Vitest unit tests
 - Jest API tests  
-- Playwright E2E tests (Chromium)
+- Playwright E2E tests
